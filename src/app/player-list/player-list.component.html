@@ -9,7 +9,7 @@
     </ul>
   </div>
   <div>
-    <h2 class="msg">{{msg}}</h2>
+    <h2 *ngIf='availablePlayers && !availablePlayers.length' class="msg">{{msg}}</h2>
   </div>
   <br><br><br>
   <div>

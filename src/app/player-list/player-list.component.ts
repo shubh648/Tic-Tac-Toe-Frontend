@@ -26,7 +26,11 @@ export class PlayerListComponent implements OnInit {
     const { queryParamMap } = this.activatedroute.snapshot;
     this.user1 = queryParamMap.get('user1');
     this.userType = queryParamMap.get('playerType');
+    this.socketService.onEventCB('newPlayer', this.addPlayerToList);
+    this.initData();
+  }
 
+  initData = () => {
     this.socketService.emit('getData', {}, (data) => {
      
       this.availablePlayers = data;
@@ -39,17 +43,14 @@ export class PlayerListComponent implements OnInit {
         this.hideUsers = false;
       }
     });
-
-    this.socketService.onEventCB('newPlayer', this.addPlayerToList);
-
-
   }
 
   addPlayerToList = (data) => {
-
-    if (data.player != this.user1) {
-      this.availablePlayers.push(data);
-    }
+    // if (data.player !== this.user1) {
+    //   this.availablePlayers.push(data);
+    // }
+    // console.log(this.availablePlayers);
+    this.initData();
   }
 
   addToList() {
