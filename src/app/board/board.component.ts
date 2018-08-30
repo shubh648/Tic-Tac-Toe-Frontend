@@ -81,9 +81,10 @@ export class BoardComponent implements OnInit {
   }
 
   singlePlayer(position) {
-    this.clicked = false;
+    
 
     if (!this.winner && !this.cells[position]) {
+      this.clicked = false;
       this.cells[position] = this.player;
       this.user1_move++;
       if (this.winnigCondition()) {
