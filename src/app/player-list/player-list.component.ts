@@ -28,8 +28,10 @@ export class PlayerListComponent implements OnInit {
     this.userType = queryParamMap.get('playerType');
 
     this.socketService.emit('getData', {}, (data) => {
+     
       this.availablePlayers = data;
       console.log('this.availablePlayers', this.availablePlayers);
+      
       if (!this.availablePlayers[0]) {
         this.hideUsers = true;
         this.msg = `No Player Available To Play, You Have To Add Yourself To Available List & Wait For Player Who Join You.`
@@ -44,7 +46,8 @@ export class PlayerListComponent implements OnInit {
   }
 
   addPlayerToList = (data) => {
-    if (data.player !== this.user1) {
+
+    if (data.player != this.user1) {
       this.availablePlayers.push(data);
     }
   }
