@@ -1,0 +1,46 @@
+.availtxt{
+    max-width: 300px;
+    color: #3995d3;
+}
+
+h3{
+    max-width: 300px;
+    color: #d47120;
+}
+
+ul{
+    text-align: left;
+}
+
+.msg{
+    color: #e61616;
+}
+
+  
+.addlist{
+    background-color: #d17d10;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 8px;
+    width: 40%;
+}
+  
+.addlist:hover{
+    background-color: #a1b1a2;
+    cursor: pointer;
+}
+
+.anchor{
+    color: blue;
+}
+
+.anchor:hover{
+    text-decoration: underline;
+    text-decoration-color: blue;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -1,0 +1,10 @@
+@import url(//fonts.googleapis.com/css?family=Dosis|Gochi+Hand:400italic,700italic,400,700);
+.main-app {
+    margin: 0 auto;
+    max-width: 800px;
+    color: #27aa16;
+  }
+  .title{
+    display: flex;
+    flex-flow: column;
+  }

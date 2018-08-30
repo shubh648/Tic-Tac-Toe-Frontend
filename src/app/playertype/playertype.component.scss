@@ -1,0 +1,65 @@
+.main-div{
+  width: 300px;
+  margin: 0 auto;
+}
+
+.single{
+    background-color: #728f74;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 10px;
+    width: 70%;
+  }
+  
+  .single:hover{
+    background-color: #497e4d;
+    cursor: pointer;
+  }
+  .multi{
+    background-color: #728f74;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 10px;
+    width: 70%;
+  }
+
+  .multi:hover{
+    background-color: #497e4d;
+    cursor: pointer;
+  }
+
+  .username{
+    font-family: 'Dosis', Helvetica, sans-serif;
+    padding: 2%;
+    width: 60%;
+  }
+  
+  .userbutton{
+    background-color: #806abe;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 10px;
+    width: 65%;
+  }
+  
+  .userbutton:hover{
+    background-color: #a1b1a2;
+    cursor: pointer;
+  }
+
+  p{
+    color: red;
+    margin: 0;
+  }

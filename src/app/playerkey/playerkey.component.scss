@@ -1,0 +1,26 @@
+.main-div{
+  width: 300px;
+  margin: 0 auto;
+}
+
+h2{
+    max-width: 300px;
+    color: #3995d3;
+}
+
+.key{
+    background-color: #ce9936;
+    color: #fff;
+    border: 0px;
+    font-family: 'Dosis', Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px;
+    padding: 10px;
+    width: 40%;
+  }
+  
+  .key:hover{
+    background-color: #a59252;
+    cursor: pointer;
+  }

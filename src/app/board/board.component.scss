@@ -1,0 +1,94 @@
+.main-board{
+  // width: 100%;
+  margin: 0 auto;
+  display: inline-flex;
+  flex-flow: row;
+  // margin-left: 30%;
+}
+
+.room{
+  // float: left;
+  margin: 0 auto;
+  margin-left: 36px;
+  width: 300px;
+}
+
+.board {
+  display: flex;
+  background-color: #3b484b;
+  width: 300px;
+  color: #fff;
+}
+
+.gameStatus {
+  margin: 0px;
+  padding: 10px;
+  background-color: #34495e;
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.restart {
+  background-color: #34495e;
+  color: #fff;
+  border: 0px;
+  font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0px;
+  padding: 15px;
+  width: 100%;
+}
+
+.restart:hover {
+  background-color: #596d6d;
+  cursor: pointer;
+}
+
+.endGame{
+  background-color: #d41620;
+  color: #fff;
+  border: 0px;
+  font-family: 'Dosis', Helvetica, sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0px;
+  padding: 15px;
+  width: 100%;
+}
+
+.endGame:hover{
+  background-color: #b8354a;
+  cursor: pointer;
+}
+
+.log{
+  float: left;
+  margin-top: 75px;
+  margin-left: 32px;
+}
+
+table {
+  font-family: 'Dosis', Helvetica, sans-serif;
+  display: flex;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dd1f1f;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:first-child {
+  background-color:  #34495e;
+  color: rgb(186, 240, 116);
+}
+
+tr {
+  background-color: #3b484b;
+  color: #fff;
+}
+

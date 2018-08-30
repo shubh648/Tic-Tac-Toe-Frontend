@@ -1,0 +1,30 @@
+<div class="main-board">
+  <div class="room">
+    <div class="gameStatus">
+      {{gameStatusMessage}}
+    </div>
+    <div class="board" *ngFor="let row of [0,1,2]">
+      <cell *ngFor="let col of [0,1,2]" [state]="cells[col+row*3]" (click)="clicked ? Move(col+row*3): null">
+      </cell>
+    </div>
+    <button class="restart" (click)="restartGame()">New Game</button>
+    <button class="endGame" routerLink="">End Game</button>
+  </div>
+  <br><br>
+  <div class="log">
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Moves</th>
+      </tr>
+      <tr>
+        <td>{{user1}}</td>
+        <td>{{user1_move}}</td>
+      </tr>
+      <tr>
+        <td>{{user2}}</td>
+        <td>{{user2_move}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

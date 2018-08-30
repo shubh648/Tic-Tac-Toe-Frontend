@@ -1,0 +1,18 @@
+<div>
+  <div [hidden]="hideUsers" >
+    <ul>
+      <h2 class="availtxt">Available Players To Play:</h2>
+      <h3>Click Players That You Want To Join:</h3>
+      <li *ngFor="let availablePlayer of availablePlayers">
+        <a class="anchor" (click)="joinGame(availablePlayer.player)">{{availablePlayer.player}}</a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h2 class="msg">{{msg}}</h2>
+  </div>
+  <br><br><br>
+  <div>
+    <button class="addlist" (click)="addToList()">Add Yourself To List</button>
+  </div>
+</div>
