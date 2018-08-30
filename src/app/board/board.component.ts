@@ -105,9 +105,9 @@ export class BoardComponent implements OnInit {
 
     this.socketService.emit('setPosition', position);
 
-    this.socketService.emit('getPosition', (pos) => {
+    this.socketService.emit('getPosition', {}, (pos) => {
       console.log(pos);
-      
+
       if (!this.winner && !this.cells[pos]) {
 
         this.cells[pos] = this.player;

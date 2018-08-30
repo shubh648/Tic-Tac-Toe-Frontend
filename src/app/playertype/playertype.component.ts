@@ -13,9 +13,9 @@ export class PlayertypeComponent implements OnInit {
   hidden = true;
   errMsg;
 
-  constructor(private socketService: SocketServiceService, private router:Router, private activatedroute: ActivatedRoute) {
+  constructor(private socketService: SocketServiceService, private router: Router, private activatedroute: ActivatedRoute) {
     console.log("came to plyertype");
-   }
+  }
 
   ngOnInit() {
 
@@ -23,35 +23,35 @@ export class PlayertypeComponent implements OnInit {
 
   }
 
-  singlePlayer(){
-    
+  singlePlayer() {
+
     this.router.navigate(["/playerkey"], { queryParams: { user1: this.user1, user2: "COMPUTER", playerType: "SinglePlayer" } });
   }
 
-  multiPlayer(){
-    
+  multiPlayer() {
+
     this.checkData(this.user1);
   }
 
-  onSubmit(username){
-    if(username){
+  onSubmit(username) {
+    if (username) {
 
       this.checkData(username);
-      
-      if(this.hidden === false){
-        this.errMsg = "Username Already Exist." ;
+
+      if (this.hidden === false) {
+        this.errMsg = "Username Already Exist.";
       }
 
     }
   }
 
-  checkData(username){
-    this.socketService.emit('getData', (data) => {
-      
-      if(data && data.some(e=> e.player === username.toUpperCase())){
+  checkData(username) {
+    this.socketService.emit('getData', {}, (data) => {
+
+      if (data && data.some(e => e.player === username.toUpperCase())) {
         this.hidden = false;
       }
-      else{
+      else {
         this.hidden = true;
         this.router.navigate(["/playerlist"], { queryParams: { user1: username.toUpperCase(), playerType: "MultiPlayer" } });
       }

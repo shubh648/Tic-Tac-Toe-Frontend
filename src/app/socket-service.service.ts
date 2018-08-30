@@ -26,7 +26,11 @@ export class SocketServiceService {
         });
     }
 
-    public emit(event: any, cb) {
-        this.socket.emit(event, cb);
+    public onEventCB(event: any, cb) {
+        this.socket.on(event, cb);
+    }
+
+    public emit(event: any, data, cb?) {
+        this.socket.emit(event, data, cb);
     }
 }

@@ -23,31 +23,36 @@ export class PlayerListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const { queryParamMap } = this.activatedroute.snapshot;
+    this.user1 = queryParamMap.get('user1');
+    this.userType = queryParamMap.get('playerType');
 
-    this.socketService.emit('getData', (data) => {
+    this.socketService.emit('getData', {}, (data) => {
       this.availablePlayers = data;
+      console.log('this.availablePlayers', this.availablePlayers);
       if (!this.availablePlayers[0]) {
         this.hideUsers = true;
         this.msg = `No Player Available To Play, You Have To Add Yourself To Available List & Wait For Player Who Join You.`
-      }
-      else {
+      } else {
         this.hideUsers = false;
       }
     });
 
+    this.socketService.onEventCB('newPlayer', this.addPlayerToList);
 
 
-    const { queryParamMap } = this.activatedroute.snapshot;
-    this.user1 = queryParamMap.get('user1');
-    // this.user2 = queryParamMap.get('user2');
-    this.userType = queryParamMap.get('playerType');
-    // this.playerKey = queryParamMap.get('key');
+  }
 
+  addPlayerToList = (data) => {
+    if (data.player !== this.user1) {
+      this.availablePlayers.push(data);
+    }
   }
 
   addToList() {
 
-    this.socketService.send({ player: this.user1 });
+    // this.socketService.send({ player: this.user1, new: true });
+    this.socketService.emit('newGame', { player: this.user1 });
     this.router.navigate(["/waitingPlayer"], { queryParams: { user1: this.user1, playerType: this.userType } });
   }
 
