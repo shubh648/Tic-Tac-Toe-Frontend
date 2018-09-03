@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SocketServiceService } from '../socket-service.service';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,12 +19,13 @@ export class BoardComponent implements OnInit {
   user1;
   user2;
   userType;
-  playerKey;
+  player1Key;
+  player2Key;
   userTurn;
   user1_move = 0;
   user2_move = 0;
   ioConnection: any
-
+  currentUser: string;
 
   constructor(private socketService: SocketServiceService, private activatedroute: ActivatedRoute, private router: Router) {
     console.log("came to board")
@@ -36,17 +37,40 @@ export class BoardComponent implements OnInit {
     this.user1 = queryParamMap.get('user1');
     this.user2 = queryParamMap.get('user2');
     this.userType = queryParamMap.get('playerType');
-    this.playerKey = queryParamMap.get('key');
+    this.player1Key = queryParamMap.get('user1Key');
+    this.player2Key = queryParamMap.get('user2Key');
+    this.currentUser = queryParamMap.get('currentUser') || 'user1';
 
-    this.player = this.playerKey;
-    this.userTurn = this.user1;
+    this.player = this.player1Key;
 
-    if (!(this.user1 && this.user2 && this.userType && this.playerKey && this.userType)) {
+    if (!(this.user1 && this.user2 && this.userType && this.player1Key && this.player2Key)) {
       this.router.navigate([""]);
     }
 
 
+    if (this.userType === "MultiPlayer") {
+      this.socketService.onEventCB('multiPlayer', this.multiPlayer);
+      this.socketService.onEventCB('restart', this.restart);
+      this.socketService.onEventCB('destroy', this.destroy);
+    }
 
+    this.userTurn = this.user1;
+
+  }
+
+  destroy = (data) => {
+    if (this.userType === "MultiPlayer") {
+      alert("Game Ended By User");
+      this.router.navigate([""]);
+    }
+
+  }
+
+
+  ngOnDestroy() {
+    if (this.userType === "MultiPlayer") {
+      this.socketService.emit('destroy', { player1: this.user1, player2: this.user2 });
+    }
   }
 
 
@@ -81,7 +105,7 @@ export class BoardComponent implements OnInit {
   }
 
   singlePlayer(position) {
-    
+
 
     if (!this.winner && !this.cells[position]) {
       this.clicked = false;
@@ -94,7 +118,7 @@ export class BoardComponent implements OnInit {
       this.player = this.player === 'X' ? 'O' : 'X';
       this.userTurn = this.user2;
 
-      if (this.player != this.playerKey && this.userType === "SinglePlayer") {
+      if (this.player != this.player1Key && this.userType === "SinglePlayer") {
 
         setTimeout(this.compUser.bind(this), 1000);
 
@@ -102,28 +126,27 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  multiPlayer(position) {
+  multiPlayer = (position) => {
 
-    this.socketService.emit('setPosition', position);
+    if (!this.winner && !this.cells[position]) {
 
-    this.socketService.emit('getPosition', {}, (pos) => {
-      console.log(pos);
+      this.cells[position] = this.player;
 
-      if (!this.winner && !this.cells[pos]) {
+      (this.userTurn == this.user1) ? this.user1_move++ : this.user2_move++;
 
-        this.cells[pos] = this.player;
-
-        (this.userTurn == this.user1) ? this.user1_move++ : this.user2_move++;
-
-        if (this.winnigCondition()) {
-          this.winner = this.userTurn;
-          return;
-        }
-
-        this.player = this.player === 'X' ? 'O' : 'X';
-        (this.userTurn == this.user1) ? this.userTurn = this.user2 : this.userTurn = this.user1;
+      if (this.winnigCondition()) {
+        this.winner = this.userTurn;
+        return;
       }
-    });
+
+      this.player = this.player === 'X' ? 'O' : 'X';
+
+      (this.userTurn == this.user1) ? this.userTurn = this.user2 : this.userTurn = this.user1;
+
+      if (this.userTurn == this[this.currentUser]) {
+        return this.clicked = true;
+      }
+    }
   }
 
   Move(position) {
@@ -131,7 +154,13 @@ export class BoardComponent implements OnInit {
       this.singlePlayer(position);
     }
     else {
-      this.multiPlayer(position);
+
+      if (this.userTurn != this[this.currentUser]) {
+        return this.clicked = false;
+      }
+
+      this.socketService.emit('multiPlayer', position);
+
     }
   }
 
@@ -152,14 +181,23 @@ export class BoardComponent implements OnInit {
 
   }
 
-  restartGame() {
+  restart = (data) => {
     this.cells = Array(9).fill(null);
-    this.player = this.playerKey;
+    this.player = this.player1Key;
     this.winner = null;
     this.clicked = true;
     this.user1_move = 0;
     this.user2_move = 0;
     this.userTurn = this.user1;
+  }
+
+  restartGame() {
+    if (this.userType === "SinglePlayer") {
+      this.restart(null);
+    }
+    else {
+      this.socketService.emit('restart', "restart");
+    }
   }
 
 }

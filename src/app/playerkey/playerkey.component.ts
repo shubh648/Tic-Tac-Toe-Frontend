@@ -18,11 +18,11 @@ export class PlayerkeyComponent implements OnInit {
   type = this.activatedroute.snapshot.queryParamMap.get('playerType');
 
   X_Player(){
-    this.router.navigate(["/board"], { queryParams: { user1: this.user1, user2: this.user2, playerType: this.type, key: "X" } });
+    this.router.navigate(["/board"], { queryParams: { user1: this.user1, user2: this.user2, playerType: this.type, user1Key: "X", user2Key:"O" } });
   }
 
   O_Player(){
-    this.router.navigate(["/board"], { queryParams: { user1: this.user1, user2: this.user2, playerType: this.type, key: "O" } });
+    this.router.navigate(["/board"], { queryParams: { user1: this.user1, user2: this.user2, playerType: this.type, user1Key: "O", user2Key:"X" } });
   }
 
 }

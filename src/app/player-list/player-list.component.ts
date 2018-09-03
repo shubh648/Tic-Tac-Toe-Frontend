@@ -32,37 +32,35 @@ export class PlayerListComponent implements OnInit {
 
   initData = () => {
     this.socketService.emit('getData', {}, (data) => {
-     
+
       this.availablePlayers = data;
+
       console.log('this.availablePlayers', this.availablePlayers);
-      
-      if (!this.availablePlayers[0]) {
+
+      if (!this.availablePlayers[0] || ((this.availablePlayers.length === 1) && this.availablePlayers[0].player === this.user1)) {
         this.hideUsers = true;
         this.msg = `No Player Available To Play, You Have To Add Yourself To Available List & Wait For Player Who Join You.`
       } else {
         this.hideUsers = false;
+        this.msg = "";
       }
     });
   }
 
   addPlayerToList = (data) => {
-    // if (data.player !== this.user1) {
-    //   this.availablePlayers.push(data);
-    // }
-    // console.log(this.availablePlayers);
     this.initData();
   }
 
   addToList() {
 
-    // this.socketService.send({ player: this.user1, new: true });
     this.socketService.emit('newGame', { player: this.user1 });
     this.router.navigate(["/waitingPlayer"], { queryParams: { user1: this.user1, playerType: this.userType } });
   }
 
   joinGame(user1) {
     console.log(user1);
-    this.router.navigate(["/board"], { queryParams: { user1: user1, user2: this.user1, playerType: this.userType, key: "X" } });
+    this.socketService.emit('joinGame', { player1: user1, player2: this.user1 });
+    this.router.navigate(["/board"], { queryParams: { user1: user1, user2: this.user1, currentUser: 'user2', playerType: this.userType, user1Key: "X", user2Key: "O" } });
 
   }
 
